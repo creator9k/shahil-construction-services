@@ -17,7 +17,6 @@ import FAQs from './components/FAQs';
 import Gallery from './components/Gallery';
 import DeliveryTracker from './components/DeliveryTracker';
 import CustomerReviews from './components/CustomerReviews';
-import AdminPanel from './components/AdminPanel';
 import FloatingActions from './components/FloatingActions';
 import { HardHat, MapPin, Phone, MessageSquare, ClipboardList, CheckCircle } from 'lucide-react';
 
@@ -25,7 +24,6 @@ export default function App() {
   const [activeTab, setActiveTab] = useState<string>('home');
   const [materials, setMaterials] = useState<Material[]>(INITIAL_MATERIALS);
   const [enquiries, setEnquiries] = useState<Enquiry[]>([]);
-  const [isAdminOpen, setIsAdminOpen] = useState(false);
   
   // Crossed states for estimator
   const [selectedEstimatorMaterialId, setSelectedEstimatorMaterialId] = useState<string | null>(null);
@@ -49,37 +47,6 @@ export default function App() {
       console.error('Failed to load local store values:', e);
     }
   }, []);
-
-  // Update prices handler
-  const handleUpdateMaterialPrice = (id: string, newPrice: number) => {
-    const updated = materials.map((m) => {
-      if (m.id === id) {
-        return { ...m, approxPrice: newPrice };
-      }
-      return m;
-    });
-    setMaterials(updated);
-    localStorage.setItem('shahil_materials_catalog', JSON.stringify(updated));
-  };
-
-  // Create custom material handler
-  const handleAddCustomMaterial = (newItem: Material) => {
-    const updated = [...materials, newItem];
-    setMaterials(updated);
-    localStorage.setItem('shahil_materials_catalog', JSON.stringify(updated));
-  };
-
-  // Change lead resolution status handler
-  const handleChangeEnquiryStatus = (id: string, status: 'new' | 'contacted' | 'resolved') => {
-    const updated = enquiries.map((enq) => {
-      if (enq.id === id) {
-        return { ...enq, status };
-      }
-      return enq;
-    });
-    setEnquiries(updated);
-    localStorage.setItem('shahil_customer_leads', JSON.stringify(updated));
-  };
 
   // Handle successful customer submissions from form or estimator
   const handleSuccessEnquiry = (newEnq: Enquiry) => {
@@ -112,7 +79,6 @@ export default function App() {
       <Navbar
         activeTab={activeTab}
         setActiveTab={setActiveTab}
-        onOpenAdmin={() => setIsAdminOpen(true)}
       />
 
       {/* Main Page Content Body router */}
@@ -267,18 +233,6 @@ export default function App() {
           window.scrollTo({ top: 200, behavior: 'smooth' });
         }}
       />
-
-      {/* Corporate Admin panel overlay modal */}
-      {isAdminOpen && (
-        <AdminPanel
-          materials={materials}
-          enquiries={enquiries}
-          onUpdateMaterialPrice={handleUpdateMaterialPrice}
-          onAddCustomMaterial={handleAddCustomMaterial}
-          onChangeEnquiryStatus={handleChangeEnquiryStatus}
-          onClose={() => setIsAdminOpen(false)}
-        />
-      )}
 
       {/* Corporate Footer lock */}
       <footer className="bg-neutral-950 border-t border-neutral-850 text-white py-12" id="website-footer">

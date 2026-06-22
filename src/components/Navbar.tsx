@@ -10,10 +10,9 @@ import { useLanguage } from '../context/LanguageContext';
 interface NavbarProps {
   activeTab: string;
   setActiveTab: (tab: string) => void;
-  onOpenAdmin: () => void;
 }
 
-export default function Navbar({ activeTab, setActiveTab, onOpenAdmin }: NavbarProps) {
+export default function Navbar({ activeTab, setActiveTab }: NavbarProps) {
   const [isOpen, setIsOpen] = useState(false);
   const { language, setLanguage, t } = useLanguage();
 
@@ -104,13 +103,7 @@ export default function Navbar({ activeTab, setActiveTab, onOpenAdmin }: NavbarP
           {/* Contact Fast CTA & Admin Button */}
           <div className="hidden md:flex items-center space-x-3">
             <LanguageSelector />
-            <button
-              onClick={onOpenAdmin}
-              className="text-xs font-mono text-neutral-400 hover:text-amber-500 transition-colors px-2 py-1 border border-neutral-700 hover:border-amber-500/50 rounded"
-              title="Admin Portal"
-            >
-              Portal Login
-            </button>
+            
             <a
               href="tel:6263063245"
               className="flex items-center space-x-2 bg-gradient-to-r from-amber-505 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-neutral-950 font-bold px-4 py-2.5 rounded-lg shadow-lg hover:shadow-amber-500/10 transition-all font-mono text-sm border-b-2 border-amber-700 active:translate-y-0.5"
@@ -123,12 +116,7 @@ export default function Navbar({ activeTab, setActiveTab, onOpenAdmin }: NavbarP
           {/* Mobile hamburger menu button */}
           <div className="md:hidden flex items-center space-x-2">
             <LanguageSelector />
-            <button
-              onClick={onOpenAdmin}
-              className="text-[10px] font-mono text-neutral-400 px-1.5 py-1 border border-neutral-800 rounded"
-            >
-              Admin
-            </button>
+            
             <button
               onClick={() => setIsOpen(!isOpen)}
               className="p-1.5 rounded-lg text-neutral-400 hover:text-white hover:bg-neutral-800 focus:outline-none"
