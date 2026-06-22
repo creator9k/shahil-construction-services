@@ -20,7 +20,7 @@ async function startServer() {
     res.json({ status: 'ok', time: new Date().toISOString() });
   });
 
-  // POST Chat routing using process.env.GEMINI_API_KEY
+  // AI chat endpoint using GEMINI_API_KEY
   app.post('/api/chat', async (req, res) => {
     try {
       const { message, history } = req.body;
@@ -29,7 +29,7 @@ async function startServer() {
       // Handle unconfigured/missing credentials gracefully
       if (!apiKey || apiKey === 'MY_GEMINI_API_KEY' || apiKey.trim() === '') {
         return res.status(401).json({
-          error: 'Gemini API Key is not configured in Secrets panel.',
+          error: 'Gemini API Key is not configured.',
           isFallback: true
         });
       }
@@ -39,12 +39,12 @@ async function startServer() {
         apiKey: apiKey,
         httpOptions: {
           headers: {
-            'User-Agent': 'aistudio-build',
+            'User-Agent': 'shahil-construction-services',
           }
         }
       });
 
-      // Strict industrial system instructions directing Gemini behavior
+      // System instructions for the AI consultant
       const systemInstruction = `You are "Shahil", an expert construction materials consultant and founding supervisor for "Shahil Construction Services" based in Ambikapur, Surguja Chhattisgarh, India. 
 
 Your material inventory details:
