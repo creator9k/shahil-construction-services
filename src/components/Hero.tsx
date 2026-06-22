@@ -190,3 +190,4 @@ export default function Hero({ onBrowseCatalogue, onGetQuote, onOpenEstimator }:
     </div>
   );
 }
+
